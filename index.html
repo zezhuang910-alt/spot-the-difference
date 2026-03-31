@@ -48,19 +48,33 @@ body {
 .level-nav button.completed { background: #4CAF50; border-color: #4CAF50; }
 .level-nav button.locked { background: #333; border-color: #444; color: #666; cursor: not-allowed; }
 .action-bar {
-  display: flex; gap: 10px; padding: 8px 15px;
+  display: flex; gap: 15px; padding: 12px 20px;
   background: rgba(0,0,0,0.15); justify-content: center;
 }
 .action-btn {
   background: linear-gradient(135deg, #ff9800, #ff5722);
-  border: none; color: #fff; padding: 8px 20px;
-  border-radius: 20px; font-size: 13px; cursor: pointer;
-  transition: all 0.3s; display: flex; align-items: center; gap: 6px;
+  border: none; color: #fff; padding: 14px 35px;
+  border-radius: 28px; font-size: 16px; font-weight: bold;
+  cursor: pointer; transition: all 0.3s;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 12px rgba(255,152,0,0.3);
+  min-width: 140px; justify-content: center;
 }
-.action-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(255,152,0,0.4); }
-.action-btn:disabled { background: #555; cursor: not-allowed; transform: none; box-shadow: none; }
-.action-btn.time-btn { background: linear-gradient(135deg, #2196F3, #0f3460); }
-.action-btn.time-btn:hover { box-shadow: 0 4px 15px rgba(33,150,243,0.4); }
+.action-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(255,152,0,0.5);
+}
+.action-btn:disabled {
+  background: #555; cursor: not-allowed;
+  transform: none; box-shadow: none; opacity: 0.6;
+}
+.action-btn.time-btn {
+  background: linear-gradient(135deg, #2196F3, #0f3460);
+  box-shadow: 0 4px 12px rgba(33,150,243,0.3);
+}
+.action-btn.time-btn:hover {
+  box-shadow: 0 6px 20px rgba(33,150,243,0.5);
+}
 .game-container {
   display: flex; justify-content: center; gap: 15px;
   padding: 15px; flex-wrap: nowrap;
