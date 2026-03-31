@@ -13,263 +13,174 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* Header */
 .header {
   background: rgba(0,0,0,0.3);
-  padding: 8px 15px;
+  padding: 10px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #e94560;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .header h1 {
-  font-size: 18px;
+  font-size: 20px;
   background: linear-gradient(90deg, #e94560, #ff6b6b);
   -webkit-background-clip: text;
-  -webkit-background-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
 }
-.level-info {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-.level-info span {
-  font-size: 13px;
-}
-.level-info .value {
-  color: #ffd700;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-/* Level Navigation */
+.level-info { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.level-info span { font-size: 14px; }
+.level-info .value { color: #ffd700; font-weight: bold; font-size: 18px; }
+.timer-warning { color: #ff4444 !important; animation: blink 0.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
 .level-nav {
-  display: flex;
-  gap: 5px;
-  padding: 8px 15px;
-  background: rgba(0,0,0,0.2);
-  overflow-x: auto;
-  flex-wrap: nowrap;
+  display: flex; gap: 6px; padding: 10px 15px;
+  background: rgba(0,0,0,0.2); overflow-x: auto;
 }
 .level-nav button {
-  background: #0f3460;
-  border: 2px solid #533483;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 12px;
-  min-width: 44px;
-  transition: all 0.3s;
-  white-space: nowrap;
+  background: #0f3460; border: 2px solid #533483; color: #fff;
+  padding: 8px 14px; border-radius: 6px; cursor: pointer;
+  font-size: 13px; min-width: 50px; transition: all 0.3s;
 }
 .level-nav button:hover { background: #533483; }
 .level-nav button.active { background: #e94560; border-color: #e94560; }
 .level-nav button.completed { background: #4CAF50; border-color: #4CAF50; }
-
-/* Game Area */
+.level-nav button.locked { background: #333; border-color: #444; color: #666; cursor: not-allowed; }
+.action-bar {
+  display: flex; gap: 10px; padding: 8px 15px;
+  background: rgba(0,0,0,0.15); justify-content: center;
+}
+.action-btn {
+  background: linear-gradient(135deg, #ff9800, #ff5722);
+  border: none; color: #fff; padding: 8px 20px;
+  border-radius: 20px; font-size: 13px; cursor: pointer;
+  transition: all 0.3s; display: flex; align-items: center; gap: 6px;
+}
+.action-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(255,152,0,0.4); }
+.action-btn:disabled { background: #555; cursor: not-allowed; transform: none; box-shadow: none; }
+.action-btn.time-btn { background: linear-gradient(135deg, #2196F3, #0f3460); }
+.action-btn.time-btn:hover { box-shadow: 0 4px 15px rgba(33,150,243,0.4); }
 .game-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
-  flex-wrap: nowrap;
+  display: flex; justify-content: center; gap: 15px;
+  padding: 15px; flex-wrap: nowrap;
 }
-
 .image-panel {
-  background: rgba(0,0,0,0.25);
-  border-radius: 8px;
-  padding: 8px;
-  text-align: center;
-  flex: 1;
+  background: rgba(0,0,0,0.3); border-radius: 10px;
+  padding: 10px; text-align: center; flex: 1; max-width: 48vw;
 }
-.image-panel h3 {
-  margin-bottom: 6px;
-  color: #aaa;
-  font-size: 13px;
-}
-
+.image-panel h3 { margin-bottom: 8px; color: #aaa; font-size: 14px; }
 .image-wrapper {
-  position: relative;
-  display: inline-block;
-  border: 2px solid #533483;
-  border-radius: 6px;
-  overflow: hidden;
-  line-height: 0;
+  position: relative; display: inline-block;
+  border: 2px solid #533483; border-radius: 6px;
+  overflow: hidden; line-height: 0;
 }
-
 .image-wrapper img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 44vw;
-  max-height: 72vh;
-  cursor: crosshair;
+  display: block; width: auto; height: auto;
+  max-width: 46vw; max-height: 72vh; cursor: crosshair;
 }
-
-/* Loading */
 .loading-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border: 3px solid rgba(255,255,255,0.1);
-  border-top-color: #e94560;
-  border-radius: 50%;
+  border-top-color: #e94560; border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-/* Diff Markers - Fixed positioning */
 .diff-marker {
-  position: absolute;
-  border: 2px dashed;
-  border-radius: 4px;
-  pointer-events: none;
-  box-sizing: border-box;
-  transition: opacity 0.3s;
+  position: absolute; border: 2px dashed; border-radius: 4px;
+  pointer-events: none; box-sizing: border-box; transition: opacity 0.3s;
 }
-.diff-marker.found {
-  border-style: solid;
-  background: rgba(76, 175, 80, 0.25);
-}
+.diff-marker.found { border-style: solid; background: rgba(76,175,80,0.25); }
 .diff-marker .marker-num {
-  position: absolute;
-  top: -20px;
-  left: 4px;
-  background: #333;
-  color: #fff;
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: bold;
-  white-space: nowrap;
+  position: absolute; top: -20px; left: 4px;
+  background: #333; color: #fff; padding: 1px 6px;
+  border-radius: 10px; font-size: 11px; font-weight: bold; white-space: nowrap;
 }
-
-/* Click Feedback */
+.diff-marker.hint-active {
+  border-color: #ff9800 !important;
+  background: rgba(255,152,0,0.2) !important;
+  animation: pulse 1s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 .click-feedback {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  position: fixed; width: 36px; height: 36px; border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
-  animation: feedbackPop 0.5s ease-out forwards;
-  pointer-events: none;
-  z-index: 100;
+  animation: feedbackPop 0.5s ease-out forwards; pointer-events: none; z-index: 100;
 }
 .click-feedback.correct { border: 3px solid #4CAF50; background: rgba(76,175,80,0.3); }
 .click-feedback.wrong { border: 3px solid #f44336; background: rgba(244,67,54,0.3); }
 @keyframes feedbackPop {
-  0% { transform: translate(-50%,-50%) scale(0); opacity: 1; }
-  50% { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
-  100% { transform: translate(-50%,-50%) scale(1); opacity: 0; }
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  50%{transform:translate(-50%,-50%) scale(1.2);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1);opacity:0}
 }
-
-/* Victory Modal */
+.progress-dots {
+  display: flex; gap: 8px; justify-content: center;
+  padding: 8px 15px; background: rgba(0,0,0,0.1);
+}
+.progress-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #444; transition: all 0.3s;
+}
+.progress-dot.found { background: #4CAF50; }
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.85);
-  display: none; align-items: center; justify-content: center; z-index: 1000;
+  background: rgba(0,0,0,0.85); display: none;
+  align-items: center; justify-content: center; z-index: 1000;
 }
 .modal-overlay.show { display: flex; }
 .modal {
   background: linear-gradient(135deg, #1a1a2e, #16213e);
-  border: 2px solid #e94560;
-  border-radius: 14px;
-  padding: 25px;
-  text-align: center;
-  max-width: 320px;
+  border: 2px solid #e94560; border-radius: 16px;
+  padding: 30px; text-align: center; max-width: 360px;
   animation: modalPop 0.3s ease-out;
 }
-@keyframes modalPop {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+@keyframes modalPop { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
 .modal h2 { color: #ffd700; font-size: 26px; margin-bottom: 12px; }
-.modal .stars { font-size: 36px; margin-bottom: 12px; }
-.modal .time { font-size: 14px; color: #aaa; margin-bottom: 6px; }
+.modal .result-icon { font-size: 50px; margin-bottom: 12px; }
+.modal .msg { font-size: 15px; color: #ccc; margin-bottom: 12px; line-height: 1.5; }
+.modal .time-info { font-size: 13px; color: #aaa; margin-bottom: 4px; }
 .modal .time-value { color: #fff; font-size: 20px; font-weight: bold; margin-bottom: 15px; }
 .modal button {
   background: #e94560; border: none; color: #fff;
-  padding: 9px 22px; border-radius: 8px; font-size: 14px;
+  padding: 10px 25px; border-radius: 8px; font-size: 15px;
   cursor: pointer; margin: 5px; transition: all 0.3s;
 }
 .modal button:hover { background: #ff6b6b; transform: scale(1.05); }
-
-/* Hint Button */
-.hint-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #ff9800, #ff5722);
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 500;
-  box-shadow: 0 4px 15px rgba(255,152,0,0.4);
-  transition: all 0.3s;
-}
-.hint-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255,152,0,0.5); }
-.hint-btn:disabled { background: #666; box-shadow: none; cursor: not-allowed; transform: none; }
-
-/* Ad Modal */
 .ad-modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
-  display: none; align-items: center; justify-content: center; z-index: 2000;
+  background: rgba(0,0,0,0.9); display: none;
+  align-items: center; justify-content: center; z-index: 2000;
 }
 .ad-modal-overlay.show { display: flex; }
 .ad-modal {
-  background: #222;
-  border: 2px solid #ff9800;
-  border-radius: 12px;
-  padding: 30px;
-  text-align: center;
-  max-width: 320px;
+  background: #222; border: 2px solid #ff9800; border-radius: 12px;
+  padding: 30px; text-align: center; max-width: 340px;
 }
-.ad-modal h3 { color: #ff9800; font-size: 18px; margin-bottom: 15px; }
-.ad-timer { font-size: 48px; font-weight: bold; color: #fff; margin: 20px 0; }
-.ad-progress {
-  width: 100%;
-  height: 8px;
-  background: #444;
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 15px 0;
-}
-.ad-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #ff9800, #ff5722);
-  width: 0%;
-  transition: width 0.1s linear;
-}
+.ad-modal h3 { color: #ff9800; font-size: 18px; margin-bottom: 10px; }
+.ad-modal p { color: #aaa; font-size: 13px; margin-bottom: 15px; }
+.ad-icon { font-size: 60px; margin: 15px 0; }
+.ad-timer { font-size: 52px; font-weight: bold; color: #fff; margin: 15px 0; }
+.ad-progress { width: 100%; height: 8px; background: #444; border-radius: 4px; overflow: hidden; margin: 15px 0; }
+.ad-progress-bar { height: 100%; background: linear-gradient(90deg, #ff9800, #ff5722); width: 0%; transition: width 0.1s linear; }
 .ad-note { font-size: 12px; color: #888; margin-top: 10px; }
-
-/* Start Screen */
 .start-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; z-index: 2000;
 }
-.start-screen h1 { font-size: 38px; margin-bottom: 15px; background: linear-gradient(90deg, #e94560, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.start-screen p { color: #aaa; font-size: 15px; margin-bottom: 30px; }
+.start-screen h1 { font-size: 40px; margin-bottom: 15px; background: linear-gradient(90deg, #e94560, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.start-screen .subtitle { color: #aaa; font-size: 16px; margin-bottom: 10px; }
+.start-screen .rules { color: #888; font-size: 13px; margin-bottom: 30px; text-align: center; max-width: 350px; line-height: 1.8; }
 .start-screen button {
   background: linear-gradient(90deg, #e94560, #ff6b6b);
-  border: none; color: #fff;
-  padding: 12px 40px; border-radius: 25px;
-  font-size: 18px; cursor: pointer; transition: all 0.3s;
+  border: none; color: #fff; padding: 13px 45px;
+  border-radius: 25px; font-size: 18px; cursor: pointer; transition: all 0.3s;
 }
 .start-screen button:hover { transform: scale(1.08); box-shadow: 0 8px 25px rgba(233,69,96,0.4); }
-
-/* Landscape Warning */
 .landscape-warning {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(135deg, #1a1a2e, #16213e);
@@ -281,51 +192,63 @@ body {
 @keyframes rotatePhone { 0%,100%{transform:rotate(0)} 50%{transform:rotate(90deg)} }
 .landscape-warning h2 { font-size: 22px; margin-bottom: 10px; color: #e94560; }
 .landscape-warning p { color: #aaa; font-size: 14px; max-width: 280px; }
-
 .hidden { display: none !important; }
-
 @media (max-width: 600px) {
-  .header h1 { font-size: 14px; }
-  .level-info span { font-size: 11px; }
-  .level-info .value { font-size: 13px; }
-  .level-nav button { padding: 5px 8px; font-size: 11px; min-width: 36px; }
+  .header h1 { font-size: 16px; }
+  .level-info span { font-size: 12px; }
+  .level-info .value { font-size: 14px; }
+  .level-nav button { padding: 6px 10px; font-size: 11px; min-width: 38px; }
+  .action-btn { padding: 7px 14px; font-size: 12px; }
   .game-container { padding: 8px; gap: 8px; }
   .image-panel { padding: 6px; }
-  .image-panel h3 { font-size: 11px; margin-bottom: 4px; }
-  .image-wrapper img { max-width: 43vw; max-height: 65vh; }
-  .hint-btn { bottom: 15px; right: 15px; padding: 8px 16px; font-size: 12px; }
+  .image-panel h3 { font-size: 12px; }
+  .image-wrapper img { max-width: 44vw; max-height: 60vh; }
 }
 </style>
 </head>
 <body>
 
-<!-- Landscape Warning -->
 <div class="landscape-warning" id="landscapeWarning">
   <div class="rotate-icon">📱</div>
   <h2>Rotate Your Device</h2>
   <p>Please use landscape mode (turn your phone sideways) for the best experience</p>
 </div>
 
-<!-- Start Screen -->
 <div class="start-screen" id="startScreen">
   <h1>🔍 Spot the Difference</h1>
-  <p>12 Levels Challenge · Find 4 differences in each picture</p>
+  <p class="subtitle">12 Levels Challenge</p>
+  <div class="rules">
+    Find all 4 differences in each picture<br>
+    ⏱️ Each level: <b>60 seconds</b><br>
+    ✅ Complete to unlock next level<br>
+    💡 Use hints & extra time wisely
+  </div>
   <button onclick="startGame()">Start Game</button>
 </div>
 
-<!-- Header -->
 <div class="header">
   <h1>🔍 Spot the Difference</h1>
   <div class="level-info">
     <span>Level: <span class="value" id="currentLevel">1</span>/12</span>
-    <span>Time: <span class="value" id="timer">00:00</span></span>
+    <span>⏱️ <span class="value" id="timer">60</span>s</span>
+    <span>✅ <span class="value" id="foundCount">0</span>/4</span>
   </div>
 </div>
 
-<!-- Level Navigation -->
 <div class="level-nav" id="levelNav"></div>
 
-<!-- Game Area -->
+<div class="action-bar">
+  <button class="action-btn" id="hintBtn" onclick="showAdModal('hint')">💡 Hint</button>
+  <button class="action-btn time-btn" id="timeBtn" onclick="showAdModal('time')">⏱️ +60s</button>
+</div>
+
+<div class="progress-dots" id="progressDots">
+  <div class="progress-dot" data-idx="0"></div>
+  <div class="progress-dot" data-idx="1"></div>
+  <div class="progress-dot" data-idx="2"></div>
+  <div class="progress-dot" data-idx="3"></div>
+</div>
+
 <div class="game-container">
   <div class="image-panel">
     <h3>📷 Original</h3>
@@ -334,7 +257,6 @@ body {
       <img id="origImg" src="" alt="Original" style="opacity:0;transition:opacity 0.3s;" onload="onImgLoad(this,'orig')" onerror="onImgError(this,'orig')">
     </div>
   </div>
-  
   <div class="image-panel">
     <h3>🔍 Modified</h3>
     <div class="image-wrapper" id="diffWrapper">
@@ -344,30 +266,50 @@ body {
   </div>
 </div>
 
-<!-- Hint Button -->
-<button class="hint-btn" id="hintBtn" onclick="showAdModal()">
-  💡 Hint (0/3)
-</button>
-
-<!-- Victory Modal -->
 <div class="modal-overlay" id="victoryModal">
   <div class="modal">
-    <h2>🎉 Level Complete!</h2>
-    <div class="stars" id="stars">⭐⭐⭐</div>
-    <div class="time">Time Used</div>
-    <div class="time-value" id="finalTime">00:00</div>
+    <div class="result-icon" id="resultIcon">🎉</div>
+    <h2 id="modalTitle">Level Complete!</h2>
+    <div class="msg" id="modalMsg">You found all differences!</div>
+    <div class="time-info">Time remaining</div>
+    <div class="time-value" id="finalTime">00s</div>
     <div>
-      <button onclick="nextLevel()" id="nextBtn">Next Level</button>
+      <button onclick="nextLevel()" id="nextBtn">Next Level →</button>
       <button onclick="replayLevel()" style="background:#666;">Replay</button>
     </div>
   </div>
 </div>
 
-<!-- Ad Modal -->
+<div class="modal-overlay" id="timeUpModal">
+  <div class="modal">
+    <div class="result-icon">⏰</div>
+    <h2>Time's Up!</h2>
+    <div class="msg">You ran out of time.<br>Don't give up, try again!</div>
+    <div class="time-info">Differences found</div>
+    <div class="time-value" id="timeUpFound">0/4</div>
+    <div>
+      <button onclick="replayLevel()">Try Again</button>
+      <button onclick="backToLevelSelect()" style="background:#666;">Level Select</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="allCompleteModal">
+  <div class="modal">
+    <div class="result-icon">🏆</div>
+    <h2>Congratulations!</h2>
+    <div class="msg">You completed all 12 levels!<br>You're a Spot the Difference master!</div>
+    <div>
+      <button onclick="restartGame()">Play Again</button>
+    </div>
+  </div>
+</div>
+
 <div class="ad-modal-overlay" id="adModal">
   <div class="ad-modal">
-    <h3>📺 Watch Ad to Unlock Hint</h3>
-    <p style="color:#aaa;font-size:13px;">Please wait while the ad loads...</p>
+    <h3 id="adTitle">📺 Watch Ad</h3>
+    <p id="adDesc">Watch to unlock hint / Get +60s extra time</p>
+    <div class="ad-icon" id="adIcon">💡</div>
     <div class="ad-timer" id="adTimer">5</div>
     <div class="ad-progress">
       <div class="ad-progress-bar" id="adProgressBar"></div>
@@ -392,43 +334,51 @@ const LEVELS = [
   {id:12,w:720,h:1280,rects:[{x1:378,y1:71,x2:503,y2:168},{x1:515,y1:0,x2:642,y2:468},{x1:206,y1:0,x2:360,y2:490},{x1:0,y1:813,x2:201,y2:1275}]},
 ];
 
+const LEVEL_TIME = 60;
 const COLORS = ['#ff4444', '#44ff44', '#4444ff', '#ffff44'];
+
 let currentLevelIdx = 0;
 let foundDifferences = [];
-let startTime = 0;
+let timeLeft = LEVEL_TIME;
 let timerInterval = null;
 let completedLevels = new Set();
 let preloadedImages = {};
-let hintsUsed = 0;
 let hintsShown = [];
 let adTimerInterval = null;
-let imgLoadStatus = { orig: false, diff: false };
+let unlockedLevels = new Set([0]);
 
 function checkOrientation() {
   const warning = document.getElementById('landscapeWarning');
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (isMobile && window.innerHeight > window.innerWidth) {
-    warning.classList.add('show');
-  } else {
-    warning.classList.remove('show');
-  }
+  if (isMobile && window.innerHeight > window.innerWidth) warning.classList.add('show');
+  else warning.classList.remove('show');
 }
-
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
 
 function init() {
   checkOrientation();
+  buildLevelNav();
+}
+
+function buildLevelNav() {
   const nav = document.getElementById('levelNav');
+  nav.innerHTML = '';
   LEVELS.forEach((lvl, idx) => {
     const btn = document.createElement('button');
-    btn.textContent = lvl.id;
-    btn.onclick = () => loadLevel(idx);
     btn.id = 'nav-' + idx;
+    if (unlockedLevels.has(idx)) {
+      btn.textContent = lvl.id;
+      btn.onclick = () => loadLevel(idx);
+      if (completedLevels.has(idx)) btn.classList.add('completed');
+      if (idx === currentLevelIdx) btn.classList.add('active');
+    } else {
+      btn.classList.add('locked');
+      btn.textContent = '🔒';
+      btn.title = 'Complete previous level first';
+    }
     nav.appendChild(btn);
   });
-  preloadLevel(0);
-  preloadLevel(1);
 }
 
 function preloadLevel(idx) {
@@ -449,12 +399,10 @@ function startGame() {
 function onImgLoad(img, type) {
   img.style.opacity = '1';
   document.getElementById(type + 'Spinner').style.display = 'none';
-  imgLoadStatus[type] = true;
-  if (imgLoadStatus.orig && imgLoadStatus.diff) {
-    drawMarkers();
-  }
+  if (type === 'orig') document.getElementById('origSpinner').style.display = 'none';
+  if (type === 'diff') document.getElementById('diffSpinner').style.display = 'none';
+  drawMarkers();
 }
-
 function onImgError(img, type) {
   document.getElementById(type + 'Spinner').style.display = 'none';
   img.style.opacity = '1';
@@ -463,32 +411,25 @@ function onImgError(img, type) {
 function loadLevel(idx) {
   currentLevelIdx = idx;
   foundDifferences = [];
-  hintsUsed = 0;
   hintsShown = [];
+  timeLeft = LEVEL_TIME;
   
   const lvl = LEVELS[idx];
   document.getElementById('currentLevel').textContent = lvl.id;
-  updateHintBtn();
+  updateFoundCount();
+  updateTimerDisplay();
+  buildLevelNav();
   
-  LEVELS.forEach((_, i) => {
-    const btn = document.getElementById('nav-' + i);
-    btn.classList.remove('active', 'completed');
-    if (i === idx) btn.classList.add('active');
-    else if (completedLevels.has(i)) btn.classList.add('completed');
-  });
-  
-  // Show spinners
   document.getElementById('origSpinner').style.display = 'block';
   document.getElementById('diffSpinner').style.display = 'block';
-  imgLoadStatus = { orig: false, diff: false };
   
   const origImg = document.getElementById('origImg');
   const diffImg = document.getElementById('diffImg');
   origImg.style.opacity = '0';
   diffImg.style.opacity = '0';
   
-  // Clear old markers
   document.querySelectorAll('.diff-marker').forEach(m => m.remove());
+  document.querySelectorAll('.progress-dot').forEach(d => d.classList.remove('found'));
   
   if (preloadedImages[lvl.id]) {
     origImg.src = preloadedImages[lvl.id].orig.src;
@@ -501,56 +442,60 @@ function loadLevel(idx) {
   preloadLevel(idx + 1);
   preloadLevel(idx + 2);
   
-  startTime = Date.now();
   if (timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(updateTimer, 1000);
-  updateTimer();
+  timerInterval = setInterval(tick, 1000);
 }
 
-function updateTimer() {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const m = Math.floor(elapsed / 60).toString().padStart(2, '0');
-  const s = (elapsed % 60).toString().padStart(2, '0');
-  document.getElementById('timer').textContent = m + ':' + s;
+function tick() {
+  timeLeft--;
+  updateTimerDisplay();
+  if (timeLeft <= 0) {
+    clearInterval(timerInterval);
+    timeUp();
+  }
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('timer');
+  el.textContent = timeLeft;
+  if (timeLeft <= 10) el.classList.add('timer-warning');
+  else el.classList.remove('timer-warning');
+}
+
+function updateFoundCount() {
+  document.getElementById('foundCount').textContent = foundDifferences.length;
 }
 
 function drawMarkers() {
   document.querySelectorAll('.diff-marker').forEach(m => m.remove());
-  
   const lvl = LEVELS[currentLevelIdx];
   
-  // Draw on both images
   ['orig', 'diff'].forEach(type => {
     const wrapper = document.getElementById(type + 'Wrapper');
     const img = document.getElementById(type + 'Img');
     
-    // Wait for image to be rendered
     requestAnimationFrame(() => {
       const rect = img.getBoundingClientRect();
       const wrapRect = wrapper.getBoundingClientRect();
-      
-      // Image offset within wrapper
       const imgLeft = rect.left - wrapRect.left;
       const imgTop = rect.top - wrapRect.top;
-      const imgW = rect.width;
-      const imgH = rect.height;
-      
-      // Scale factors
-      const scaleX = imgW / lvl.w;
-      const scaleY = imgH / lvl.h;
+      const scaleX = rect.width / lvl.w;
+      const scaleY = rect.height / lvl.h;
       
       foundDifferences.forEach(idx => {
         const r = lvl.rects[idx];
-        const marker = createMarker(idx, r, imgLeft, imgTop, scaleX, scaleY, true);
+        const marker = createMarkerEl(idx, r, imgLeft, imgTop, scaleX, scaleY, true);
         wrapper.appendChild(marker);
+        document.querySelectorAll('.progress-dot')[idx].classList.add('found');
       });
       
       hintsShown.forEach(idx => {
+        if (foundDifferences.includes(idx)) return;
         const existing = wrapper.querySelector('.hint-marker[data-idx="' + idx + '"]');
         if (!existing) {
           const r = lvl.rects[idx];
-          const marker = createMarker(idx, r, imgLeft, imgTop, scaleX, scaleY, false);
-          marker.classList.add('hint-marker');
+          const marker = createMarkerEl(idx, r, imgLeft, imgTop, scaleX, scaleY, false);
+          marker.classList.add('hint-active', 'hint-marker');
           wrapper.appendChild(marker);
         }
       });
@@ -558,86 +503,77 @@ function drawMarkers() {
   });
 }
 
-function createMarker(idx, r, imgLeft, imgTop, scaleX, scaleY, isFound) {
+function createMarkerEl(idx, r, imgLeft, imgTop, scaleX, scaleY, isFound) {
   const marker = document.createElement('div');
   marker.className = 'diff-marker' + (isFound ? ' found' : '');
   marker.dataset.idx = idx;
-  
-  const left = imgLeft + r.x1 * scaleX;
-  const top = imgTop + r.y1 * scaleY;
-  const width = (r.x2 - r.x1) * scaleX;
-  const height = (r.y2 - r.y1) * scaleY;
-  
-  marker.style.left = left + 'px';
-  marker.style.top = top + 'px';
-  marker.style.width = Math.max(4, width) + 'px';
-  marker.style.height = Math.max(4, height) + 'px';
+  marker.style.left = (imgLeft + r.x1 * scaleX) + 'px';
+  marker.style.top = (imgTop + r.y1 * scaleY) + 'px';
+  marker.style.width = Math.max(4, (r.x2 - r.x1) * scaleX) + 'px';
+  marker.style.height = Math.max(4, (r.y2 - r.y1) * scaleY) + 'px';
   marker.style.borderColor = COLORS[idx];
-  
   const num = document.createElement('span');
   num.className = 'marker-num';
   num.style.background = COLORS[idx];
   num.textContent = idx + 1;
   marker.appendChild(num);
-  
   return marker;
 }
 
 function handleClick(event) {
   if (foundDifferences.length >= 4) return;
-  
   const lvl = LEVELS[currentLevelIdx];
   const img = document.getElementById('diffImg');
   const rect = img.getBoundingClientRect();
-  
   const x = (event.clientX - rect.left) / rect.width * lvl.w;
   const y = (event.clientY - rect.top) / rect.height * lvl.h;
   
   for (let i = 0; i < 4; i++) {
     if (foundDifferences.includes(i)) continue;
-    
     const r = lvl.rects[i];
     if (x >= r.x1 && x <= r.x2 && y >= r.y1 && y <= r.y2) {
       foundDifferences.push(i);
+      document.querySelectorAll('.hint-marker[data-idx="' + i + '"]').forEach(m => m.remove());
       drawMarkers();
+      updateFoundCount();
       showFeedback(event.clientX, event.clientY, true);
-      
-      if (foundDifferences.length === 4) {
-        levelComplete();
-      }
+      if (foundDifferences.length === 4) levelComplete();
       return;
     }
   }
-  
   showFeedback(event.clientX, event.clientY, false);
 }
 
 function showFeedback(x, y, correct) {
-  const feedback = document.createElement('div');
-  feedback.className = 'click-feedback ' + (correct ? 'correct' : 'wrong');
-  feedback.style.left = x + 'px';
-  feedback.style.top = y + 'px';
-  document.body.appendChild(feedback);
-  setTimeout(() => feedback.remove(), 500);
+  const fb = document.createElement('div');
+  fb.className = 'click-feedback ' + (correct ? 'correct' : 'wrong');
+  fb.style.left = x + 'px';
+  fb.style.top = y + 'px';
+  document.body.appendChild(fb);
+  setTimeout(() => fb.remove(), 500);
 }
 
 function levelComplete() {
   clearInterval(timerInterval);
   completedLevels.add(currentLevelIdx);
-  document.getElementById('nav-' + currentLevelIdx).classList.add('completed');
+  if (currentLevelIdx < 11) unlockedLevels.add(currentLevelIdx + 1);
+  buildLevelNav();
   
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const m = Math.floor(elapsed / 60).toString().padStart(2, '0');
-  const s = (elapsed % 60).toString().padStart(2, '0');
+  if (currentLevelIdx === 11) {
+    document.getElementById('allCompleteModal').classList.add('show');
+    return;
+  }
   
-  document.getElementById('finalTime').textContent = m + ':' + s;
-  let stars = '⭐⭐⭐';
-  if (elapsed > 60) stars = '⭐⭐';
-  if (elapsed > 120) stars = '⭐';
-  document.getElementById('stars').textContent = stars;
-  
-  document.getElementById('nextBtn').style.display = currentLevelIdx < 11 ? 'inline-block' : 'none';
+  document.getElementById('resultIcon').textContent = '🎉';
+  document.getElementById('modalTitle').textContent = 'Level ' + LEVELS[currentLevelIdx].id + ' Complete!';
+  document.getElementById('modalMsg').textContent = 'You found all 4 differences!';
+  document.getElementById('finalTime').textContent = timeLeft + 's left';
   document.getElementById('victoryModal').classList.add('show');
+}
+
+function timeUp() {
+  document.getElementById('timeUpFound').textContent = foundDifferences.length + '/4';
+  document.getElementById('timeUpModal').classList.add('show');
 }
 
 function nextLevel() {
@@ -647,60 +583,74 @@ function nextLevel() {
 
 function replayLevel() {
   document.getElementById('victoryModal').classList.remove('show');
+  document.getElementById('timeUpModal').classList.remove('show');
   loadLevel(currentLevelIdx);
 }
 
-// Hint System
-function updateHintBtn() {
-  const btn = document.getElementById('hintBtn');
-  const unfound = 4 - foundDifferences.length;
-  const remaining = Math.max(0, 3 - hintsUsed);
-  btn.textContent = '💡 Hint (' + hintsUsed + '/3)';
-  btn.disabled = remaining <= 0 || unfound <= 0;
+function backToLevelSelect() {
+  document.getElementById('timeUpModal').classList.remove('show');
 }
 
-function showAdModal() {
-  const unfound = 4 - foundDifferences.length - hintsShown.length;
-  if (unfound <= 0 || hintsUsed >= 3) return;
+function restartGame() {
+  document.getElementById('allCompleteModal').classList.remove('show');
+  completedLevels.clear();
+  unlockedLevels.clear();
+  unlockedLevels.add(0);
+  currentLevelIdx = 0;
+  buildLevelNav();
+  loadLevel(0);
+}
+
+// Ad System
+function showAdModal(type) {
+  // Check if any unfound differences exist for hint
+  if (type === 'hint') {
+    const unfound = 4 - foundDifferences.length;
+    if (unfound <= 0) return;
+  }
   
+  document.getElementById('adTitle').textContent = '📺 Watch Ad';
+  document.getElementById('adDesc').textContent = type === 'hint' 
+    ? 'Watch to reveal a hint location' 
+    : 'Watch to get +60 seconds';
+  document.getElementById('adIcon').textContent = type === 'hint' ? '💡' : '⏱️';
+  document.getElementById('adTimer').textContent = '5';
+  document.getElementById('adProgressBar').style.width = '0%';
   document.getElementById('adModal').classList.add('show');
+  
   let countdown = 5;
   let progress = 0;
-  
-  document.getElementById('adTimer').textContent = countdown;
-  document.getElementById('adProgressBar').style.width = '0%';
-  
   adTimerInterval = setInterval(() => {
     countdown--;
     progress += 20;
     document.getElementById('adTimer').textContent = countdown > 0 ? countdown : 'Go!';
     document.getElementById('adProgressBar').style.width = Math.min(100, progress) + '%';
-    
     if (countdown <= 0) {
       clearInterval(adTimerInterval);
       setTimeout(() => {
         document.getElementById('adModal').classList.remove('show');
-        unlockHint();
+        if (type === 'hint') unlockHint();
+        else addTime();
       }, 300);
     }
   }, 1000);
 }
 
 function unlockHint() {
-  const unfoundIndices = [];
+  const unfound = [];
   for (let i = 0; i < 4; i++) {
-    if (!foundDifferences.includes(i) && !hintsShown.includes(i)) {
-      unfoundIndices.push(i);
-    }
+    if (!foundDifferences.includes(i) && !hintsShown.includes(i)) unfound.push(i);
   }
-  
-  if (unfoundIndices.length > 0) {
-    hintsUsed++;
-    const hintIdx = unfoundIndices[Math.floor(Math.random() * unfoundIndices.length)];
+  if (unfound.length > 0) {
+    const hintIdx = unfound[Math.floor(Math.random() * unfound.length)];
     hintsShown.push(hintIdx);
-    updateHintBtn();
     drawMarkers();
   }
+}
+
+function addTime() {
+  timeLeft += 60;
+  updateTimerDisplay();
 }
 
 init();
