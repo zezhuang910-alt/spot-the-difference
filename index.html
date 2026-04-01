@@ -34,7 +34,7 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;font-
 .loading-spinner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border:3px solid rgba(255,255,255,.1);border-top-color:#e94560;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 .diff-marker{position:absolute;border:2px dashed;border-radius:4px;pointer-events:none;box-sizing:border-box;transition:opacity .3s}
-.diff-marker.found{border-style:solid;background:rgba(76,175,80,.25)}
+.diff-marker.found{border-style:solid;border-color:#4CAF50!important;background:rgba(76,175,80,.25)!important}
 .diff-marker .marker-num{position:absolute;top:-20px;left:4px;background:#333;color:#fff;padding:1px 6px;border-radius:10px;font-size:11px;font-weight:bold;white-space:nowrap}
 .diff-marker.hint-active{border-color:#ff9800!important;background:rgba(255,152,0,.2)!important;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
@@ -69,12 +69,6 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;font-
 .start-screen .rules{color:#888;font-size:13px;margin-bottom:30px;text-align:center;max-width:350px;line-height:1.8}
 .start-screen button{background:linear-gradient(90deg,#e94560,#ff6b6b);border:none;color:#fff;padding:13px 45px;border-radius:25px;font-size:18px;cursor:pointer;transition:all .3s}
 .start-screen button:hover{transform:scale(1.08);box-shadow:0 8px 25px rgba(233,69,96,.4)}
-.landscape-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1a1a2e,#16213e);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:3000;text-align:center;padding:20px}
-.landscape-warning.show{display:flex}
-.landscape-warning .rotate-icon{font-size:70px;margin-bottom:15px;animation:rotatePhone 2s ease-in-out infinite}
-@keyframes rotatePhone{0%,100%{transform:rotate(0)}50%{transform:rotate(90deg)}}
-.landscape-warning h2{font-size:22px;margin-bottom:10px;color:#e94560}
-.landscape-warning p{color:#aaa;font-size:14px;max-width:280px}
 .hidden{display:none!important}
 @media(max-width:600px){
 .header h1{font-size:16px}
@@ -92,12 +86,6 @@ body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;font-
 </style>
 </head>
 <body>
-
-<div class="landscape-warning" id="landscapeWarning">
-  <div class="rotate-icon">📱</div>
-  <h2>Rotate Your Device</h2>
-  <p>Please use landscape mode (turn your phone sideways) for the best experience</p>
-</div>
 
 <div class="start-screen" id="startScreen">
   <h1>🔍 Spot the Difference</h1>
@@ -234,16 +222,7 @@ let completedLevels=new Set(),preloadedImages={},hintsShown=[],adTimerInterval=n
 let unlockedLevels=new Set([0]);
 let levelImgs={};
 
-function checkOrientation(){
-  const w=document.getElementById('landscapeWarning');
-  if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.innerHeight>window.innerWidth)w.classList.add('show');
-  else w.classList.remove('show');
-}
-window.addEventListener('resize',checkOrientation);
-window.addEventListener('orientationchange',checkOrientation);
-
 function init(){
-  checkOrientation();
   buildLevelNav();
   preloadAllLevels();
 }
@@ -372,10 +351,10 @@ function mkMarker(idx,r,il,it,sx,sy,found){
   m.style.top=(it+r.y1*sy)+'px';
   m.style.width=Math.max(4,(r.x2-r.x1)*sx)+('px');
   m.style.height=Math.max(4,(r.y2-r.y1)*sy)+('px');
-  m.style.borderColor=COLORS[idx];
+  m.style.borderColor=found?'#4CAF50':COLORS[idx];
   const n=document.createElement('span');
   n.className='marker-num';
-  n.style.background=COLORS[idx];
+  n.style.background=found?'#4CAF50':COLORS[idx];
   n.textContent=idx+1;
   m.appendChild(n);
   return m;
