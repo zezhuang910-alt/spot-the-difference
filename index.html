@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Spot the Difference - 12 Levels Challenge</title>
+<title>Spot the Difference - 12 Levels Challenge v3.5</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;min-height:100vh;overflow-x:hidden}
@@ -311,7 +311,7 @@ function preloadAllLevels(){
   LEVELS.forEach((lvl,idx)=>{
     levelImgs[idx]={orig:new Image(),mod:new Image()};
     levelImgs[idx].orig.src=BASE_ORIG+lvl.id+'.jpg';
-    levelImgs[idx].mod.src=BASE_MOD+lvl.id+'.png';
+    levelImgs[idx].mod.src=BASE_MOD+lvl.id+'.jpg';
   });
 }
 
