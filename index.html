@@ -10,6 +10,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Spot the Difference - 12 Levels Challenge v3.5</title>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YRWXYK390R"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-YRWXYK390R',{send_page_view:true});
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;min-height:100vh;overflow-x:hidden}
@@ -347,6 +355,7 @@ function startGame(){
   document.getElementById('startScreen').classList.add('hidden');
   loadLevel(startIdx);
   updateURL(startIdx);
+  trackGA('game_start',{level:startIdx+1});
 }
 
 // ─── Image Load Handlers ──────────────────────────────────────────────────
@@ -383,6 +392,7 @@ function loadLevel(idx){
   if(timerInterval)clearInterval(timerInterval);
   timerInterval=setInterval(tick,1000);
   updateURL(idx);
+  trackGA('level_start',{level:lvl.id,level_index:idx});
 }
 
 // ─── Timer ─────────────────────────────────────────────────────────────────
@@ -467,12 +477,14 @@ function handleClick(e){
       drawMarkers();
       updateFoundCount();
       showFeedback(e.clientX,e.clientY,true);
+      trackGA('difference_found',{level:lvl.id,difference_index:i+1,total_found:foundDifferences.length});
       if(foundDifferences.length===4)levelComplete();
       return;
     }
   }
   playWrong();
   showFeedback(e.clientX,e.clientY,false);
+  trackGA('wrong_click',{level:lvl.id});
 }
 
 function showFeedback(x,y,ok){
@@ -490,6 +502,7 @@ function levelComplete(){
   if(currentLevelIdx<11)unlockedLevels.add(currentLevelIdx+1);
   buildLevelNav();
   playVictory();
+  trackGA('level_complete',{level:LEVELS[currentLevelIdx].id,time_remaining:timeLeft});
   if(currentLevelIdx===11){
     document.getElementById('allCompleteModal').classList.add('show');
     return;
@@ -504,6 +517,7 @@ function levelComplete(){
 function timeUp(){
   document.getElementById('timeUpFound').textContent=foundDifferences.length+'/4';
   document.getElementById('timeUpModal').classList.add('show');
+  trackGA('time_up',{level:LEVELS[currentLevelIdx].id,differences_found:foundDifferences.length});
 }
 
 // ─── Navigation ────────────────────────────────────────────────────────────
@@ -556,9 +570,14 @@ function showAdModal(type){
 function unlockHint(){
   const unfound=[];
   for(let i=0;i<4;i++)if(!foundDifferences.includes(i)&&!hintsShown.includes(i))unfound.push(i);
-  if(unfound.length>0){hintsShown.push(unfound[Math.floor(Math.random()*unfound.length)]);drawMarkers();playHint();}
+  if(unfound.length>0){hintsShown.push(unfound[Math.floor(Math.random()*unfound.length)]);drawMarkers();playHint();trackGA('hint_used',{level:LEVELS[currentLevelIdx].id});}
 }
-function addTime(){timeLeft+=60;updateTimerDisplay();playCorrect();}
+function addTime(){timeLeft+=60;updateTimerDisplay();playCorrect();trackGA('extra_time_used',{level:LEVELS[currentLevelIdx].id,time_added:60});}
+
+// ─── Google Analytics 4 Events ─────────────────────────────────────────────
+function trackGA(event,params){
+  try{gtag('event',event,params);}catch(e){}
+}
 
 // ─── Boot ──────────────────────────────────────────────────────────────────
 preloadAllLevels();
